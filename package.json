@@ -1,0 +1,30 @@
+{
+  "name": "myshop-backend",
+  "version": "1.0.0",
+  "description": "myshop-backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duchieu2504/myshop_nodejs.git"
+  },
+  "keywords": [
+    "myshop_nodejs"
+  ],
+  "author": "fox",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/duchieu2504/myshop_nodejs/issues"
+  },
+  "homepage": "https://github.com/duchieu2504/myshop_nodejs#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.6",
+    "method-override": "^3.0.0",
+    "mongoose": "^6.5.2",
+    "mongoose-delete": "^0.5.4",
+    "mongoose-slug-generator": "^1.0.4"
+  }
+}
