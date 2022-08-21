@@ -27,6 +27,22 @@ class ProductsControllers {
             .catch(next);
         // Products.save
     }
+    edit(req, res, next) {
+        const _id = req.params.id;
+        Products.findOne({ _id: _id })
+            .then((product) =>
+                res.render("products/edit", {
+                    product: mongooseToObject(product),
+                })
+            )
+            .catch(next);
+    }
+    update(req, res, next) {
+        const newData = req.body;
+        Products.updateOne({ _id: req.params.id }, { ...req.body })
+            .then(() => res.redirect("/products/show"))
+            .catch(next);
+    }
 }
 const productControllers = new ProductsControllers();
 export default productControllers;

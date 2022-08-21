@@ -7,6 +7,7 @@ import morgan from "morgan";
 import db from "./config/db/index.js";
 import routes from "./routes/index.js";
 import methodOverride from "method-override";
+import helpers from "./helpers/handlebars.js";
 
 const app = express();
 const port = 8080;
@@ -28,7 +29,7 @@ app.use(
 app.use(express.json());
 app.use(methodOverride("_method"));
 
-app.engine(".hbs", engine({ extname: ".hbs" }));
+app.engine(".hbs", engine({ extname: ".hbs", helpers: helpers }));
 app.set("view engine", ".hbs");
 app.set("views", path.join(__dirname, "resources", "views"));
 
