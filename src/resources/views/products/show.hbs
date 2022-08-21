@@ -1,0 +1,34 @@
+<div class="product_list">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Phân loại</th>
+                <th scope="col">Giá</th>
+                <th scope="col">Kích thước</th>
+                <th scope="col">Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each product}}
+
+                <tr>
+                    <th scope="row">1</th>
+                    <td>{{this.title}}</td>
+                    <td>{{this.category}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.size}}</td>
+                    <td>
+                        <a href="/" class="btn btn-link">Xem chi tiết</a>
+                        <a href="/" class="btn btn-link">Xóa</a>
+                        <a href="/" class="btn btn-link">Sửa</a>
+                    </td>
+                    
+                </tr>
+            {{/each}}
+
+        </tbody>
+    </table>
+
+</div>

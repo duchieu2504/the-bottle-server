@@ -1,0 +1,52 @@
+<form className="form_create_product" action="/products/store" method="POST">
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Tên sản phẩm</label>
+        <input
+            type="text"
+            id="title"
+            name="title"
+            class="form-control"
+            aria-label="default input example"
+        />
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Phân loại</label>
+        <select class="form-select" aria-label="Default select example" name="category">
+            <option selected>Phân loại sản phẩm</option>
+            <option value="1">Khuôn hàng rào</option>
+            <option value="2">Khuôn gạch hoa</option>
+            <option value="3">Khuôn của sổ</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="descriptions" class="form-label">Mô tả</label>
+        <textarea
+            class="form-control"
+            id="descriptions"
+            name="descriptions"
+            rows="3"
+        ></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Giá sản phẩm</label>
+        <input
+            id="price"
+            name="price"
+            type="text"
+            class="form-control"
+            aria-label="default input example"
+        />
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Kích thước</label>
+        <input
+            id="size"
+            name="size"
+            type="text"
+            class="form-control"
+            aria-label="default input example"
+        />
+    </div>
+        <button type="submit" class="btn btn-primary">Tạo sản phẩm</button>
+
+</form>
