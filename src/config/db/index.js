@@ -2,8 +2,6 @@ import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-console.log(process.env.USERNAMEMONGDB);
-console.log(process.env.PASSWORD);
 // kết nối với mongoDB
 const connect = async () => {
     try {
