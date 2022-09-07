@@ -8,7 +8,9 @@ import db from "./config/db/index.js";
 import routes from "./routes/index.js";
 import methodOverride from "method-override";
 import helpers from "./helpers/handlebars.js";
+import sortMiddleware from "./app/middlewares/middlewares.js";
 
+import cors from "cors";
 const app = express();
 const port = 8080;
 
@@ -21,6 +23,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // Connect to DB
 db();
 
+// xử lý các method post, get
 app.use(
     express.urlencoded({
         extended: true,
@@ -29,15 +32,17 @@ app.use(
 app.use(express.json());
 app.use(methodOverride("_method"));
 
+// sortMiddleware
+app.use(sortMiddleware);
+
+app.use(cors());
+
+// views
 app.engine(".hbs", engine({ extname: ".hbs", helpers: helpers }));
 app.set("view engine", ".hbs");
 app.set("views", path.join(__dirname, "resources", "views"));
 
 app.use(morgan("combined"));
-
-app.get("/", (req, res) => {
-    res.render("home");
-});
 
 routes(app);
 

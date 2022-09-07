@@ -34,9 +34,20 @@
                         Sản phẩm
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/products/show">Danh sách</a></li>
+                        <li><a class="dropdown-item" href="/products/show">Danh
+                                sách</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="/products/create">Tạo mới</a></li>
+                        <li><a class="dropdown-item" href="/products/create">Tạo
+                                mới</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="/products/trash">Danh
+                                sách đã xóa</a></li>
+                                <li>
+                            <a
+                                class="dropdown-item"
+                                href="/api/products"
+                            >Api sản phẩm</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -51,12 +62,22 @@
                         Đơn hàng
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/orderProducts">Danh sách</a></li>
-                        <li><hr class="dropdown-divider" /></li>
+                        <li>
+                            <a class="dropdown-item" href="/api/orderProducts/list">Danh
+                                sách</a>
+                        </li>
+                        <li> <hr class="dropdown-divider" /> </li>
+                        <li>
+                            <a
+                                class="dropdown-item"
+                                href="/api/orderProducts/data"
+                            >Api đơn hàng</a>
+                        </li>
+
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/reviews">Đánh giá</a>
+                    <a class="nav-link" href="/api/reviews">Đánh giá</a>
                 </li>
 
             </ul>
@@ -67,10 +88,7 @@
                     placeholder="Tìm kiếm"
                     aria-label="Search"
                 />
-                <button
-                    class="btn btn-outline-success"
-                    type="submit"
-                >Tìm kiếm</button>
+                <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
             </form>
         </div>
     </div>

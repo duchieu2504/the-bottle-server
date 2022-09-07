@@ -1,25 +1,50 @@
-<form className="form_create_product" action="/products/{{product._id}}?_method=PUT" method="POST">
+<form className="form_create_product" action="/products/{{product._id}}?_method=PUT" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Tên sản phẩm</label>
+        <label for="title" class="form-label">Tên sản phẩm</label>
         <input
             type="text"
             id="title"
             name="title"
             class="form-control"
             aria-label="default input example"
-            value={{product.title}}
+            value="{{product.title}}"
         />
     </div>
+    
     <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Phân loại</label>
-            
-        <select class="form-select" aria-label="Default select example" name="category" value={{product.category}} >
-            <option >Phân loại sản phẩm</option>
-            <option value="1" {{setSelected product.category 1}}>Khuôn hàng rào</option>
-            <option value="2">Khuôn gạch hoa</option>
-            <option value="3" {{setSelected product.category 3}}>Khuôn của sổ</option>
+        <label for="exampleFormControlInput1" class="form-label">Hình thức</label>
+        <select class="form-select" aria-label="Default select example" name="category">
+            <option >Loại sản phẩm</option>
+            {{#each category}}
+                {{#with  ../categoryId}}
+                    <option value="{{sum @index 1}}" {{setSelected categoryId @index}} >{{@../this}} </option>
+                {{/with}}
+            {{/each}}
         </select>
     </div>
+
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Phân loại</label>
+        <select class="form-select" aria-label="Default select example" name="classify">
+
+            <option >Phân loại sản phẩm</option>
+            {{#each classify }}
+                {{#with  ../classifyId}}
+                    <option value="{{sum @index 1}}"  {{setSelected classifyId @index}}>{{@../this}} </option>
+                {{/with}}
+            {{/each}}
+        </select>
+    </div>
+
+        <h4 for="img-thumbnail" class="form-label">Hình ảnh ban đầu</h4>
+    <div class="mb-3">
+        <img src={{image}} class="img-thumbnail rounded "  id="img-thumbnail" alt="Image">
+    </div>
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Thay đổi hình ảnh</label>
+        <input class="form-control" type="file" name="image" id="formFile">
+    </div>
+    
     <div class="mb-3">
         <label for="descriptions" class="form-label">Mô tả</label>
         <textarea
@@ -34,7 +59,7 @@
         <input
             id="price"
             name="price"
-            value={{product.price}}
+            value="{{product.price}}"
             type="text"
             class="form-control"
             aria-label="default input example"
@@ -45,7 +70,7 @@
         <input
             id="size"
             name="size"
-            value={{product.size}}
+            value="{{product.size}}"
             type="text"
             class="form-control"
             aria-label="default input example"

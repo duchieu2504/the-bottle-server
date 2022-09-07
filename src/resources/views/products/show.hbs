@@ -1,9 +1,47 @@
-<div class="product_list">
+<form
+    class="mt-5"
+    name="container-form"
+    method="POST"
+    action="/products/handle-submit-form"
+>
+    <h2>Danh sách các sản phẩm</h2>
+
+    <div class="d-flex w-50 align-items-center">
+        <div class="form_check_all">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="checkAll"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+                Chọn tất cả
+            </label>
+        </div>
+        <div class="w-25">
+            <select class="form-select-all-options" aria-label="Default select example" name="action">
+                <option value="0" selected>Hành động</option>
+                <option value="1">Xóa</option>
+            </select>
+
+        </div>
+        <button
+            class="btn btn-primary btn-submit-form"
+            disabled="true"
+            data-bs-toggle="modal"
+            data-bs-target="#btn-form-submit"
+        >Thực hiện</button>
+
+    </div>
     <table class="table">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">STT</th>
+                <th scope="col">
+                    Tên sản phẩm
+                    {{{sortable "title" _sort}}}
+                </th>
                 <th scope="col">Phân loại</th>
                 <th scope="col">Giá</th>
                 <th scope="col">Kích thước</th>
@@ -14,20 +52,191 @@
             {{#each product}}
 
                 <tr>
-                    <th scope="row">1</th>
+                    <td>
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="productIds[]"
+                            value="{{this._id}}"
+                            id="checkbox-item"
+                        />
+                    </td>
+                    <th scope="row">{{{sum @index 1}}}</th>
                     <td>{{this.title}}</td>
                     <td>{{this.category}}</td>
                     <td>{{this.price}}</td>
                     <td>{{this.size}}</td>
                     <td>
                         <a href="/" class="btn btn-link">Xem chi tiết</a>
-                        <a  class="btn btn-link">Xóa</a>
-                        <a href="/products/{{this._id}}/edit" class="btn btn-link">Sửa</a>
+                        <button
+                            class="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-id="{{this._id}}"
+                            data-bs-target="#delete-product-modal"
+                        >Xóa</button>
+                        <a
+                            href="/products/{{this._id}}/edit"
+                            class="btn btn-link"
+                        >Sửa</a>
                     </td>
-                    
                 </tr>
-            {{/each}}
 
+                <!-- Modal delete -->
+                <div
+                    class="modal fade"
+                    id="delete-product-modal"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                >
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5
+                                    class="modal-title"
+                                    id="exampleModalLabel"
+                                >Xóa sản phẩm</h5>
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                ></button>
+                            </div>
+                            <div class="modal-body">
+                                Xóa sản phẩm
+                                {{this.title}}. Hành động này không xóa hoàn
+                                toàn sản phẩm, sản phẩm bị xóa sẽ chuyển đến
+                                trang
+                                <a href="/products/trash">Danh sách các sản phẩm
+                                    đã xóa</a>
+                            </div>
+                            <div class="modal-footer">
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                                >Hủy</button>
+                                <button
+                                    type="button"
+                                    class="btn btn-primary btn-delete-product"
+                                >Xóa</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
         </tbody>
     </table>
+</form>
+
+{{! Form xóa sản phẩm }}
+<form
+    name="form_delete"
+    {{!-- action="/products/{{this._id}}?_method=DELETE" --}}
+    method="POST"
+></form>
+
+<!-- Modal delete form submit -->
+<div
+    class="modal fade"
+    id="btn-form-submit"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xóa sản phẩm</h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                Hành động này không xóa hoàn toàn sản phẩm, sản
+                phẩm bị xóa sẽ chuyển đến trang
+                <a href="/products/trash">Danh sách các sản phẩm đã xóa</a>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >Hủy</button>
+                <button
+                    type="button"
+                    class="btn btn-primary btn-delete-product"
+                >Xóa</button>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => { 
+        var productId;
+        const btnDeleteProduct = document.querySelector('.btn-delete-product'); 
+        const formDelete = document.forms['form_delete']; 
+        const formSubmit =document.forms['container-form'];
+
+        const checkAll = document.querySelector('#checkAll')
+        const checkItem = document.querySelectorAll('#checkbox-item')
+
+        const checkItemProduct = $('input[name="productIds[]"]')
+        const selectAllOptions = document.querySelector('.form-select-all-options')
+        const btnSubmitFormAction = document.querySelector('#btn-form-submit')
+        const btnSubmitForm = document.querySelector('.btn-submit-form')
+
+        btnDeleteProduct.addEventListener('click', () => { 
+            console.log(productId)
+            formDelete.action = "/products/" + productId + "?_method=DELETE"
+            formDelete.submit() 
+        }) 
+
+        // click vào nút xóa thì lấy được id của sản phẩm dự định xóa
+        $('#delete-product-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            productId = button.data('id') 
+        })
+
+        // click check All
+        checkAll.addEventListener("change", (e) => {
+            const isCheckAll = e.target.checked
+            for(let i = 0; i < checkItem.length; i++) {
+                checkItem[i].toggleAttribute("checked", isCheckAll)
+            }
+            btnSubmitIsDisabled()
+        })
+
+        // click item check
+        checkItemProduct.change(() => {
+            const isCheckAll = checkItemProduct.length === $('input[name="productIds[]"]:checked').length
+            checkAll.toggleAttribute("checked", isCheckAll)
+            btnSubmitIsDisabled()
+        })
+
+        selectAllOptions.addEventListener('change', () => {
+            btnSubmitIsDisabled()
+
+        })
+        btnSubmitForm.addEventListener('click', (e) => {
+            e.preventDefault()
+        })
+        btnSubmitFormAction.addEventListener("click", () => {
+            formSubmit.submit()
+        })
+
+
+        function btnSubmitIsDisabled() {
+            const isCheckBox = $('input[name="productIds[]"]:checked').length
+            const isSelectAllOptionsChange = selectAllOptions.value
+            const isDisabled = isCheckBox && isSelectAllOptionsChange !== "0"
+             btnSubmitForm.toggleAttribute('disabled', !isDisabled)
+        } 
+    })
+
+</script>

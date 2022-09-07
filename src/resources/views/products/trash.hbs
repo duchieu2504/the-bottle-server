@@ -1,0 +1,175 @@
+<div class="product_list">
+    <h1>Danh sách các sản phẩm đã xóa</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Phân loại</th>
+                <th scope="col">Giá</th>
+                <th scope="col">Kích thước</th>
+                <th scope="col">Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each product}}
+
+                <tr>
+                    <th scope="row">1</th>
+                    <td>{{this.title}}</td>
+                    <td>{{this.category}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.size}}</td>
+                    <td>
+                        <a href="/" class="btn btn-link">Xem chi tiết</a>
+                        <button
+                            class="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-id="{{this._id}}"
+                            data-bs-target="#delete_force_product"
+                        >Xóa</button>
+                        <button
+                            {{!-- href="/products/{{this._id}}/restore" --}}
+                            class="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-id="{{this._id}}"
+                            data-bs-target="#restoreProduct"
+                        >Khôi phục</button>
+                    </td>
+                </tr>
+                {{else}}
+                  <tr>
+                      <td colspan="5">Thùng rác trống</td>
+                      <td>
+                        <a href="/products/show">Danh sách các sản phẩm của tôi</a>
+                      </td>
+                  </tr>
+                
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+<!-- Modal delete -->
+<div
+    class="modal fade"
+    id="delete_force_product"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5
+                    class="modal-title"
+                    id="exampleModalLabel"
+                >Xóa sản phẩm</h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                Xóa sản phẩm
+                {{this.title}}. Hành động này sẽ xóa hoàn
+                toàn sản phẩm, sản phẩm bị xóa sẽ không thể khôi phục lại được
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >Hủy</button>
+                <button
+                    type="button"
+                    class="btn btn-primary btn-delete-product"
+                >Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Modale Khôi phục sản phẩm --}}
+<div
+    class="modal fade"
+    id="restoreProduct"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5
+                    class="modal-title"
+                    id="exampleModalLabel"
+                >Khôi phục sản phẩm</h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                Khôi phục sản phẩm
+                {{this.title}}. Hành động này sẽ khôi phục lại sản phẩm.
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >Hủy</button>
+                <button
+                    type="button"
+                    class="btn btn-primary btn-restore-product"
+                >Khôi phục</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{! Form xóa sản phẩm }}
+<form name="form_delete_force" method="POST" ></form>
+
+{{! Form khôi phục sản phẩm }}
+<form name="form_restore" method="POST" ></form>
+<script>
+    document.addEventListener("DOMContentLoaded", () => { 
+        let productId;
+        const btnDeleteProduct = document.querySelector('.btn-delete-product'); 
+        const btnRestoreProduct = document.querySelector('.btn-restore-product'); 
+
+        const formDelete = document.forms['form_delete_force']; 
+        const formRestore = document.forms['form_restore']; 
+
+        //lấy id sản phẩm
+        $('#restoreProduct').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            productId = button.data('id') 
+        })
+
+        //lấy id sản phẩm
+        $('#delete_force_product').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            productId = button.data('id') 
+        })
+
+        //xóa san phẩm
+        btnDeleteProduct.addEventListener('click', (e) => { 
+            e.preventDefault()
+            formDelete.action = "/products/" + productId + "/force?_method=DELETE"
+            formDelete.submit() 
+        }) 
+
+        //khôi phục sản phẩm
+        btnRestoreProduct.addEventListener('click', (e) => { 
+            e.preventDefault()
+            formRestore.action = "/products/" + productId + "/restore?_method=PATCH"
+            formRestore.submit() 
+        }) 
+    })
+</script>
