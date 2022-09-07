@@ -10,12 +10,12 @@ import methodOverride from "method-override";
 import helpers from "./helpers/handlebars.js";
 import sortMiddleware from "./app/middlewares/middlewares.js";
 
+import * as dotenv from "dotenv";
+dotenv.config();
+
 import cors from "cors";
 const app = express();
 const PORT = process.env.PORT || 8080;
-
-import * as dotenv from "dotenv";
-dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
