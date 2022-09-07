@@ -3,7 +3,6 @@ import {
     mutipleMongooseToObject,
 } from "../../until/mongooseObject.js";
 import Products from "../model/Products.js";
-import "dotenv/config";
 import cloudinary from "../../until/cloudinary.js";
 
 class ProductsControllers {

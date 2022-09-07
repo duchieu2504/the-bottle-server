@@ -14,6 +14,9 @@ import cors from "cors";
 const app = express();
 const port = 8080;
 
+import * as dotenv from "dotenv";
+dotenv.config();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -46,4 +49,4 @@ app.use(morgan("combined"));
 
 routes(app);
 
-app.listen(port);
+app.listen(process.env.PORT || port);
