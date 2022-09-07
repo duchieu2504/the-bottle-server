@@ -12,7 +12,7 @@ import sortMiddleware from "./app/middlewares/middlewares.js";
 
 import cors from "cors";
 const app = express();
-const port = 8080;
+const PORT = process.env.PORT || 8080;
 
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -49,4 +49,4 @@ app.use(morgan("combined"));
 
 routes(app);
 
-app.listen(process.env.PORT || process.env.POSTDEFAULT);
+app.listen(PORT);
