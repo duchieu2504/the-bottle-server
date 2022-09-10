@@ -25,10 +25,12 @@ class OrderControllers {
     async createOrderUnpaid(req, res, next) {
         try {
             const product = await Products.findById(req.body.productId);
+            console.log(req.params.id);
             const address = await Address.findOne({
                 userId: req.params.id,
                 isDefault: true,
             });
+            console.log(address);
             const orderUnpaid = await Orders.findOne({
                 userId: req.params.id,
                 unpaid: false,
@@ -51,13 +53,16 @@ class OrderControllers {
                     message: "thêm sản phâm thành công",
                 });
             } else {
+                console.log(orderUnpaid);
+
                 const data = {
                     userId: req.params.id,
                     code: "hello",
-                    address: address._id || null,
+                    address: address?._id || null,
                     totalPrice: product.price,
                     productIds: [req.body],
                 };
+                console.log(data);
                 const order = new Orders(data);
 
                 order
@@ -89,6 +94,7 @@ class OrderControllers {
         try {
             const id = req.params.id;
             const order = await Orders.find({ userId: id, unpaid: false });
+            console.log(order);
             await res.json({
                 errCode: "0",
                 data: order[0],

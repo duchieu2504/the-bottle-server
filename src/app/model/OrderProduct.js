@@ -7,7 +7,7 @@ const OrderSchema = new Schema(
     {
         code: { type: String, required: true },
         userId: { type: String, default: null },
-        address: { type: String, required: true, default: null },
+        address: { type: String, default: null },
         confirmedPayment: { type: Boolean, default: false }, // xác nhận đã thanh toán từ phía server
         totalPrice: { type: String, required: true },
         unpaid: { type: Boolean, required: true, default: false }, // xác nhận đã chuyển khoản hay chưa, quyết định lưu các sản phẩm trong store của khách hàng
