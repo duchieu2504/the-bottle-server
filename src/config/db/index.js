@@ -14,6 +14,7 @@ const connect = async () => {
                 // useFindAndModify: false,
             }
         );
+        // await mongoose.connect("mongodb://localhost:27017/myshop-backend");
         console.log("MongoDB connected");
     } catch (err) {
         console.log("Connect failure");

@@ -2,20 +2,6 @@ import Orders from "../model/OrderProduct.js";
 import Products from "../model/Products.js";
 import Address from "../model/Address.js";
 class OrderControllers {
-    //POST /api/orderProducts/storeOrder
-    create(req, res, next) {
-        //
-        try {
-            const data = req.body;
-            const order = new Orders(data);
-            order
-                .save()
-                .then(() => res.json({ errCode: "0", message: "Post success" }))
-                .catch(next);
-        } catch {
-            res.json({ errCode: "1", message: "Lỗi up order" });
-        }
-    }
     store(req, res, next) {
         Orders.find()
             .then((order) => res.render("orderProduct/show", order))
@@ -25,12 +11,10 @@ class OrderControllers {
     async createOrderUnpaid(req, res, next) {
         try {
             const product = await Products.findById(req.body.productId);
-            console.log(req.params.id);
             const address = await Address.findOne({
                 userId: req.params.id,
                 isDefault: true,
             });
-            console.log(address);
             const orderUnpaid = await Orders.findOne({
                 userId: req.params.id,
                 unpaid: false,
@@ -53,8 +37,6 @@ class OrderControllers {
                     message: "thêm sản phâm thành công",
                 });
             } else {
-                console.log(orderUnpaid);
-
                 const data = {
                     userId: req.params.id,
                     code: "hello",
@@ -62,7 +44,6 @@ class OrderControllers {
                     totalPrice: product.price,
                     productIds: [req.body],
                 };
-                console.log(data);
                 const order = new Orders(data);
 
                 order
@@ -94,7 +75,6 @@ class OrderControllers {
         try {
             const id = req.params.id;
             const order = await Orders.find({ userId: id, unpaid: false });
-            console.log(order);
             await res.json({
                 errCode: "0",
                 data: order[0],
@@ -201,8 +181,6 @@ class OrderControllers {
                     return await promise;
                 };
                 const newTotalPrice = await totalPrice();
-                console.log(productIdsCopy);
-                console.log(newTotalPrice);
                 await Orders.updateOne(
                     { userId: uid, unpaid: false },
                     {

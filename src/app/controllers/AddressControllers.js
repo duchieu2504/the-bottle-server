@@ -16,7 +16,6 @@ class AddressControllers {
                 userId: req.params.userId,
                 isDefault: true,
             });
-            console.log(data);
             res.json(data);
         } catch (err) {
             res.json([]);
