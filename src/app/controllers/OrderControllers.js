@@ -52,7 +52,7 @@ class OrderControllers {
                     .next();
             }
         } catch (err) {
-            res.json({
+            res.status(404).json({
                 errCode: "1",
                 message: "lỗi tải lên dữ liệu sản phẩm vào giỏ hàng",
             });
@@ -66,7 +66,7 @@ class OrderControllers {
             const order = await Orders.find({ userId: id, unpaid: true });
             await res.json(order);
         } catch (err) {
-            res.json([]);
+            res.status(404).json([]);
         }
     }
 
@@ -97,7 +97,7 @@ class OrderControllers {
                 message: "Xác nhận đã chuyển khoản",
             });
         } catch (err) {
-            res.json({
+            res.status(404).json({
                 errCode: "1",
                 message: "lỗi xác nhận đã chuyển khoản của khách hàng",
             });
@@ -146,7 +146,7 @@ class OrderControllers {
             });
             // const  result = await
         } catch (err) {
-            res.json({
+            res.status(404).json({
                 errCode: "1",
                 message: "lỗi cập nhật số lượng sản phẩm",
             });
@@ -194,7 +194,7 @@ class OrderControllers {
                 });
             }
         } catch (err) {
-            res.json({
+            res.status(404).json({
                 errCode: "1",
                 message: "lỗi cập nhật số lượng sản phẩm",
             });

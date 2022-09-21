@@ -53,11 +53,6 @@ class ProductsControllers {
             // console.log(products);
             await products.save();
             await res.redirect("/products/show");
-
-            // products
-            //     .save()
-            //     .then(() => res.redirect("/products/show"))
-            //     .catch(next);
         } catch {
             next();
             res.json({ errCode: 1, error: "Upload file image fail" });

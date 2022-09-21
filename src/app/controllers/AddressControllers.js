@@ -53,7 +53,7 @@ class AddressControllers {
                     .catch(next);
             }
         } catch (err) {
-            res.json({ errCode: "1", message: "Error POSt" });
+            res.status(404).json({ errCode: "1", message: err.message });
         }
     }
     async edit(req, res, next) {
@@ -79,7 +79,7 @@ class AddressControllers {
                 res.json({ message: "Update thanh coong" });
             }
         } catch (err) {
-            res.json({ message: "Error" });
+            res.status(404).json({ errCode: 1, message: err.message });
         }
     }
 }

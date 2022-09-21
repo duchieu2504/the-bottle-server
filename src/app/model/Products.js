@@ -17,6 +17,7 @@ const ProductsSchema = new Schema(
         timestamps: true,
     }
 );
+
 //custom helper query
 ProductsSchema.query.sortProduct = function (req) {
     if (req.query.hasOwnProperty("_sort")) {
@@ -40,11 +41,10 @@ ProductsSchema.query.convertImage = async function (req) {
         console.log("Lỗi tải Hình ảnh");
     }
 };
-
 ProductsSchema.plugin(mongoose_delete, {
     deletedAt: true,
-    overrideMethods: "all",
+    // overrideMethods: true,
+    overrideMethods: ["count", "find", "findOne", "findDeleted"],
 });
-
 const Products = mongoose.model("Products", ProductsSchema);
 export default Products;

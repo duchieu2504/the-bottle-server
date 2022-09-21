@@ -8,16 +8,14 @@ const connect = async () => {
         await mongoose.connect(
             `mongodb+srv://${process.env.USERNAMEMONGDB}:${process.env.PASSWORD}@the-bottle.ujjp7e3.mongodb.net/?retryWrites=true&w=majority`,
             {
-                // useCreateIndex: true,
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
-                // useFindAndModify: false,
             }
         );
         // await mongoose.connect("mongodb://localhost:27017/myshop-backend");
         console.log("MongoDB connected");
     } catch (err) {
-        console.log("Connect failure");
+        console.log("ERROR", err.message);
     }
 };
 export default connect;
